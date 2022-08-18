@@ -1,0 +1,10 @@
+.rightbar-main{
+    display: flex;
+    margin: 10px;
+    
+    flex-wrap: wrap;
+    width: 98%;
+    height: 90%;
+    overflow-y: scroll;
+    padding-block: 10px;
+}

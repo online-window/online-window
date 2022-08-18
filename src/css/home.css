@@ -1,0 +1,33 @@
+.home-main{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height:48vw;
+}
+
+.home-middle{
+    display: flex;
+    width: 100%;
+    height: 85%;
+    background-color: aquamarine;
+}
+
+.home-head{
+    height: 10%;
+    background-color: rgba(156, 163, 163, 0.3);
+}
+
+.home-last{
+    height: 5%;
+    background-color: rgba(156, 163, 163, 0.3);
+}
+
+.home-left{
+    width:20%;
+    background-color: rgba(221, 165, 101, 0.6);
+}
+
+.home-right{
+    width: 100%;
+    background-color:rgba(138, 219, 192, 0.4);
+}

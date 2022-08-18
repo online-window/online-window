@@ -1,0 +1,13 @@
+.alert{
+    width:97%;
+    position: fixed;
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 10px;
+    margin:5px;
+    border-radius: 20px;
+    color: rgb(36, 32, 32);
+    border: 1px solid black;
+    z-index: 100;
+}

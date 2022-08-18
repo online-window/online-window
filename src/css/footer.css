@@ -1,0 +1,10 @@
+.footer-main{
+    display: flex;
+    align-items: center;
+    margin-inline: 10px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    cursor: default;
+    font-style: italic;
+}

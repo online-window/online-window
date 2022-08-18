@@ -1,0 +1,69 @@
+.nav-main{
+    width: 98%;
+    height: 100%;
+    display: flex;
+    padding-inline: 10px;
+}
+
+.nav-foot{
+    display: flex;
+    width: 60%;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-foot-part-1{
+    display: flex;
+    justify-content: space-between;
+    width: 33%;
+}
+
+.nav-foot-part-2{
+    width: 65%;
+}
+
+.nav-head{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: default;
+}
+
+.nav-head-item{
+    width: 15%;
+    height: 100%;
+}
+
+.nav-head-item img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.nav-head-profile{
+    width: 15%;
+    height: 100%;
+}
+
+.nav-head-profile img{
+    width:100%;
+    height:100%;
+    border-radius: 100px;
+}
+
+.nav-head-profile-name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.nav-head-logout{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
