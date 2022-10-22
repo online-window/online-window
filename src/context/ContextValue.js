@@ -3,22 +3,27 @@ import ContextMain from './ContextMain'
 import {deleteRequest, getRequest,postRequest, putRequest} from "../api/server"
 import EditFolder from '../component/EditFolder';
 import Properties from '../component/Properties';
+import Cookies from "js-cookie";
 import EditProfile from '../component/EditProfile';
+import AccessLink from '../component/AccessLink';
 export default function ContextValue(props) {
   const [getAlert,setAlert]=useState({status:false,msg:"Server Error...",type:"error"});
   const [loading,setLoading]=useState(false)
   const [getShow,setShow]=useState(false)
+  const [getCurrSpace,setCurrSpace]=useState(0)
   const [getRender,setRender]=useState(false)
+  const [getShared,setShared]=useState(false)
   const [getCurrentDir,setCurrentDir]=useState([{folder_name:"root:",_id:null,status:2}])
   const [getUser,setUser]=useState({name:"",emailid:"",profile_pic:""})
   const [getFolders,setFolders]=useState([])
-  const [getClickFolder,setClickFolder]=useState({folder_logo:"",_id: "",folder_name: "",folder_type:1,folder_access_link:"",folder_extention:"",access_all:false,access_people:[],folder_add_date:""})
+  const [getClickFolder,setClickFolder]=useState({folder_logo:"",_id: "",folder_name: "",folder_type:1,folder_access_link:"",folder_extention:"",access_all:false,access_people:[],folder_add_date:"",space:""})
   const [getAnchor,setAnchor]=useState({x:0,y:0})
   const [getCutFolder,setCutFolder]=useState({_id:"",folder_name:""})
   const [getMenuOption,setMenuOptions]=useState([])
   const [open,setOpen]=useState(false)
   const [getForward,setForward]=useState([])
   const uploadFileRef=useRef()
+ 
   const uploadFolderLogo=useRef()
   const [getDialog,setDialog]=useState({title:"",component:<></>})
   const currentValue={value:-1}
@@ -38,14 +43,14 @@ export default function ContextValue(props) {
     var height=window.innerHeight
     var left=e.pageX;
     var top=e.pageY;
-    console.log([[width,left],[height,top]])
+    // console.log([[width,left],[height,top]])
     if(left+200>=width){
         left-=(left+200-width)
     }
     if(top+420>=height){
       top-=(top+425-height)
     }
-    console.log(left,top)
+    // console.log(left,top)
     setAnchor({x:left,y:top})
     SetMenuOptions(currentValue['value'])
     setShow(true)
@@ -62,7 +67,10 @@ export default function ContextValue(props) {
   }
   const editFolder=()=>{
         try{
-
+            if(getShared){
+              Alert("Not Allow In Shared Folder")
+              return
+            }
             setOpen(true)
             setDialog({title:"Edit Folder",component:<EditFolder folder_type={getClickFolder.folder_type} folder_logo={getClickFolder.folder_logo} folder_name={getClickFolder.folder_name}  _id={getClickFolder._id} />})
         }
@@ -72,7 +80,19 @@ export default function ContextValue(props) {
   }
   const DeleteFolder=async()=>{
         try{
-          console.log(getClickFolder)
+          if(getShared){
+            setLoading(true)
+            let res=await getRequest(`folder/r/access/${getClickFolder._id}?state=true`)
+            if(res.status){
+                Alert("Folder Deleted Successfully","success")
+                fetchFolders()
+            }
+            else{
+              Alert(res.error,"error")
+            }
+            setLoading(false)
+            return
+          }
             setLoading(true)
             let res=await deleteRequest(`folder/${getClickFolder._id}`)
             setLoading(false)
@@ -90,7 +110,6 @@ export default function ContextValue(props) {
   }
   const PropertiesFolder=()=>{
     try{
-
       setOpen(true)
       setDialog({title:"Properties",component:<Properties/>})
   }
@@ -100,6 +119,10 @@ export default function ContextValue(props) {
   }
   const MoveFolder=()=>{
         try{
+          if(getShared){
+            Alert("Not Allow In Shared Folder")
+            return
+          }
             setCutFolder({_id:getClickFolder._id,folder_name:getClickFolder.folder_name})
             setRender(!getRender)
         }
@@ -109,6 +132,10 @@ export default function ContextValue(props) {
   }
   const newFolder=async()=>{
     try{
+      if(getShared){
+        Alert("Not Allow In Shared Folder")
+        return
+      }
       setLoading(true)
       let curr=getCurrentDir;
       let _id=curr[curr.length-1]._id;
@@ -133,6 +160,10 @@ export default function ContextValue(props) {
   }
   }
   const uploadFile=()=>{
+    if(getShared){
+      Alert("Not Allow In Shared Folder")
+      return
+    }
     uploadFileRef.current.click()
   }
   const openCmd=()=>{
@@ -141,10 +172,6 @@ export default function ContextValue(props) {
   const MovePrev=()=>{
     let curr=getCurrentDir;
     if(curr[curr.length-1]._id!==null){
-      // console.log("Current Dir ",getForward)
-      // let obj=getForward
-      // obj.push(curr);
-      // setForward(obj);
       curr.pop()
     setCurrentDir(curr)
     setRender(!getRender)
@@ -167,11 +194,12 @@ export default function ContextValue(props) {
   }
   const logout=async()=>{
         try{
+
            setLoading(true)
             let res=await getRequest("user/logout");
             setLoading(false)
             if(res.status){
-                window.document.cookie=""
+                Cookies.remove("token")
                 window.location.href="/login"
             }
             else{
@@ -184,7 +212,12 @@ export default function ContextValue(props) {
   }
   const getAccessLink=()=>{
       try{
-
+        if(getShared){
+          Alert("Not Allow In Shared Folder")
+          return
+        }
+        setOpen(true)
+        setDialog({title:"Get Link",component:<AccessLink/>})
       }
       catch(e){
         Alert("Server Error....")
@@ -192,7 +225,12 @@ export default function ContextValue(props) {
   }
   const pasteFolder=async()=>{
       try{
+        if(getShared){
+          Alert("Not Allow In Shared Folder")
+          return
+        }
           if(getCutFolder._id!==""){
+
             let curr=getCurrentDir;
             let _id=curr[curr.length-1]._id;
             let body={}
@@ -203,7 +241,7 @@ export default function ContextValue(props) {
               body["folder_parent"]="null"
             }
             setLoading(true)
-            let res=await putRequest(`/folder/${getCutFolder._id}`,body)
+            let res=await putRequest(`folder/${getCutFolder._id}`,body)
             setLoading(false)
             if(res.status){
                 Alert(`Folder ${getCutFolder.folder_name} Move Successfully`,"success")
@@ -221,21 +259,28 @@ export default function ContextValue(props) {
   }
   const SetMenuOptions=(status)=>{
       if(status===1){
+        let obj=[]
+        if(!getShared){
+         obj=[{"name":"Edit","action":editFolder},
+        
+        {"name":"Cut","action":MoveFolder},
+        {"name":"Get Link","action":getAccessLink},
+        {"name":"Edit Logo","action":EditFolderLogo}]}
           var options=[
             {"name":"Open","action":OpenFolder},
-            {"name":"Edit","action":editFolder},
+            ...obj,
             {"name":"Delete","action":DeleteFolder},
-            {"name":"Cut","action":MoveFolder},
-            // {"name":"Get Link","action":getAccessLink},
-            {"name":"Edit Logo","action":EditFolderLogo},
             {"name":"Properties","action":PropertiesFolder},
           ]
       }
       else{
+        let obj=[]
+        if(!getShared){
+         obj=[{"name":"New Folder","action":newFolder},
+         {"name":"Upload File","action":uploadFile},
+         {"name":"Paste","action":pasteFolder}]}
         var options=[
-          {"name":"New Folder","action":newFolder},
-          {"name":"Upload File","action":uploadFile},
-          {"name":"Paste","action":pasteFolder},
+          ...obj,
           // {"name":"Cmd","action":openCmd},
           {"name":"Previous","action":MovePrev},
           // {"name":"Next","action":MoveNext},
@@ -258,6 +303,10 @@ export default function ContextValue(props) {
   }
 
   const EditFolderLogo=()=>{
+    if(getShared){
+      Alert("Not Allow In Shared Folder")
+      return
+    }
         uploadFolderLogo.current.click()
   }
   const Alert=(msg,type="error")=>{
@@ -269,17 +318,35 @@ export default function ContextValue(props) {
 
   const fetchFolders=async(path)=>{
       try{
-          console.log(getCurrentDir)
-          setLoading(true)
-          let res=await getRequest(`folder/path?path=${((path?path:getCurrentDir).map((item)=>item.folder_name)).join("/")}` )
+    
+        if(getShared){
+          path=`folder/other/path?path=${((path?path:getCurrentDir).map((item)=>item.folder_name)).join("/")}`
+          if(getCurrentDir.length!==1){
+            path+=`&id=${getCurrentDir[1]._id}`
+          }
+        }
+        else{
+          path=`folder/path?path=${((path?path:getCurrentDir).map((item)=>item.folder_name)).join("/")}`
+        }
+        setLoading(true)
+          let res=await getRequest(path)
           setLoading(false)
-          if(!res.status){
+          if(!res.status && Cookies.get("token")){
             Alert(res.error,"warning");
           }
-          setFolders(res.folders)
+          if(res.folders && res.dirs){
+            setFolders(res.folders)
             setCurrentDir(res.dirs)
+            let total_size=0;
+            for(let val of res.folders){
+              total_size+=parseFloat(val.space);
+            }
+            setCurrSpace(total_size)
+          }
+            
       }
       catch(e){
+        console.log(e)
           Alert("Server Error...","error")
       }
   }
@@ -291,7 +358,10 @@ export default function ContextValue(props) {
               setUser(res.user)
           }
           else{
-            Alert(res.error);
+            if(Cookies.get("token")){
+              Cookies.remove("token")
+              Alert("Session Expire..","error");
+            }
             window.location.href="/login"
           }
       }
@@ -302,9 +372,9 @@ export default function ContextValue(props) {
   useEffect(()=>{
     fetchFolders()
     // eslint-disable-next-line
-  },[])
+  },[getUser,getShared])
   return (
-    <ContextMain.Provider value={{editProfile,uploadFolderLogo,getCutFolder,uploadFileRef,open,setOpen,getDialog,setDialog,OpenFolder,getClickFolder,setClickFolder,logout,handleContextMenu,getAnchor,setAnchor,getMenuOption,SetMenuOptions,fetchFolders,getRender,setRender,setShow,getShow,getFolders,setFolders,getAlert,getCurrentDir,setCurrentDir,Alert,loading,setLoading,getUserData,getUser,MoveNext,MovePrev,reloadPage,newFolder,editFolder,getForward,setForward}}>
+    <ContextMain.Provider value={{getShared,getCurrSpace,setShared,editProfile,uploadFile,uploadFolderLogo,getCutFolder,uploadFileRef,open,setOpen,getDialog,setDialog,OpenFolder,getClickFolder,setClickFolder,logout,handleContextMenu,getAnchor,setAnchor,getMenuOption,SetMenuOptions,fetchFolders,getRender,setRender,setShow,getShow,getFolders,setFolders,getAlert,getCurrentDir,setCurrentDir,Alert,loading,setLoading,getUserData,getUser,MoveNext,MovePrev,reloadPage,newFolder,editFolder,getForward,setForward}}>
         {props.children} 
     </ContextMain.Provider>
   )

@@ -28,7 +28,7 @@ export default function EditFolder(props) {
         body['folder_logo']=getLogo;
         if(Object.keys(body).length!==0){
             context.setLoading(true)
-            let res=await putRequest(`/folder/${props._id}`,body);
+            let res=await putRequest(`folder/${props._id}`,body);
             context.setLoading(false)
             if(res.status){
                 context.setOpen(false)

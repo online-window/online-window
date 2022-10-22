@@ -9,6 +9,7 @@ import ContextMain from "./context/ContextMain";
 import Home from "./component/Home";
 import DialogBox from "./component/DialogBox";
 import { postRequestFile } from "./api/server";
+import NewNav from "./component/NewNav";
 function App() {
   const context=useContext(ContextMain)
   const handleChange=async(file)=>{
@@ -79,6 +80,9 @@ function App() {
       <Switch>
       <Route exact path="/login">
         <Login/>
+      </Route>
+      <Route exact path="/nav">
+        <NewNav/>
       </Route>
       <Route exact path="/signup">
         <Signup/>

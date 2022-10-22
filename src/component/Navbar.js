@@ -5,8 +5,9 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {TextField} from "@material-ui/core"
 import ContextMain from "../context/ContextMain"
+import {SERVER_URL} from "../api/server"
 import "../css/navbar.css"
-import Cookies from 'js-cookie';
+import SideBar from './SideBar';
 export default function Navbar() {
   const [getEnable,setEnable]=useState(false)
   const context=useContext(ContextMain)
@@ -37,6 +38,9 @@ export default function Navbar() {
   return (
     <div className='nav-main' >
       <div className='nav-foot'>
+      <div className='nav-foot-part-1'>
+        <SideBar/>
+        </div>
         <div className='nav-foot-part-1'>
             <div className='nav-foot-item' onClick={context.MovePrev}>
                 <KeyboardBackspaceIcon  style={{fontSize:35,color:context.getCurrentDir[context.getCurrentDir.length-1]._id===null?"grey":"black",cursor:(context.getCurrentDir[context.getCurrentDir.length-1]._id===null?"default":"pointer")}}/>
@@ -60,7 +64,7 @@ export default function Navbar() {
         <img src="/cmdLogo.png" alt='Command Promt'  />
         </div> */}
         <div className='nav-head-profile' style={{cursor:"pointer"}} onClick={context.editProfile}> 
-        <img src={`${context.getUser['profile_pic']}?tk=${Cookies.get("token")}`} alt={context.getUser['emailid']}  />
+        <img src={`${String(context.getUser['profile_pic']).includes("/")?context.getUser['profile_pic']:`${SERVER_URL}/user/profile_pic/?pic=${context.getUser['profile_pic']}`}`} alt={context.getUser['emailid']}  />
         </div>
         <div className='nav-head-profile-name' style={{cursor:"pointer"}} onClick={context.editProfile}>
         {context.getUser['name']}

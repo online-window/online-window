@@ -5,6 +5,7 @@ import LeftBar from "./LeftBar"
 import RightBar from "./RightBar"
 import "../css/home.css"
 import ContextMain from '../context/ContextMain'
+import NewNav from './NewNav'
 export default function Home() {
   const context=useContext(ContextMain)
   useEffect(()=>{
@@ -14,7 +15,7 @@ export default function Home() {
   return (
     <div className='home-main' onContextMenu={(e)=>{context.handleContextMenu(e,0,1);}} >
       <div className='home-head' >
-      <Navbar/>
+      <NewNav/>
       </div>
       <div className='home-middle'>
         {/* <div className='home-left'>
