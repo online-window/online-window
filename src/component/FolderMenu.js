@@ -9,12 +9,12 @@ export default function FolderMenu(props) {
     <div className="menu" style={{left:props.x,top:props.y}}>
         {options.map((item)=>{
           return(
-            <>
+            <div className='menu-item-main'>
             <div className="menu-item" onClick={()=>{item.action(props.folder)}}>
               {item.name}
             </div>
             <Divider/>
-            </>
+            </div>
           )
         })
       }

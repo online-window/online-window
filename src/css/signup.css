@@ -2,12 +2,12 @@
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    height: 47.8vw;
+    height: 99vh;
     cursor: default;
 }
 
 .signup-sec-1{
-    width:60%;
+    width:50%;
     height:100%;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .signup-sec-2{
-    width: 39%;
+    width: 49%;
     margin-inline: 5px;
     height: 100%;
     border: 1px solid black;
@@ -55,6 +55,15 @@
     font-weight: 600;
     font-style: italic;
     text-align: center;
+}
+
+@media only screen and (max-width: 600px){
+    .signup-sec-1{
+        display: none;
+    }
+    .signup-sec-2{
+        width: 99%;
+    }
 }
 
 

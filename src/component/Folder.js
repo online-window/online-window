@@ -6,13 +6,16 @@ import "../css/folder.css"
 export default function Folder(props) {
     let {_id,folder_access_link,folder_name,folder_type,folder_extention,folder_logo,access_all,access_people,folder_add_date,space}=props.folder;
     const fileRef=useRef()
-    const fileLogo={"csv":"excel.png","xlxs":"excel.png","excel":"excel.png","doc":"doc.png","docx":"doc.png","pdf":"pdf.png","ppt":"ppt.png","other":"exe.png"}
+    const fileLogo={"csv":"excel.png","xlxs":"excel.png","excel":"excel.png","doc":"doc.png","docx":"doc.png","pdf":"pdf.png","ppt":"ppt.png","other":"exe.png","pptx":"ppt.png"}
     const context=useContext(ContextMain);
     const handleRightClick=(e)=>{
         context.handleContextMenu(e,1,0);
     } 
+    const handleSave=()=>{
+        context.setClickFolder({folder_logo,folder_name,_id,folder_type,folder_access_link,folder_extention,access_all,access_people,folder_add_date,space})
+    }
   return (
-    <div className='folder-main'  onMouseEnter={()=>{context.setClickFolder({folder_logo,folder_name,_id,folder_type,folder_access_link,folder_extention,access_all,access_people,folder_add_date,space})}} onClick={context.OpenFolder} onContextMenu={handleRightClick}>
+    <div className='folder-main'  onMouseEnter={()=>{handleSave()}} onClick={()=>{handleSave();context.OpenFolder()}} onContextMenu={handleRightClick}>
             <div className='folder-logo-main'>
                 {
                     folder_logo!==""?<img  src={String(folder_logo).includes("/")?folder_logo:`${SERVER_URL}/folder_logo/${folder_logo}`} className='folder-logo' alt={folder_name}/>:folder_type===1?<img alt="Folder" src='/folderLogo.png' className='folder-logo'/>:<a ref={fileRef} href={`${SERVER_URL}/access/${folder_type}/${folder_access_link}`} target="__blank__"><div className='folder-logo'>

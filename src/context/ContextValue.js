@@ -1,6 +1,6 @@
 import React,{useEffect, useRef, useState} from 'react'
 import ContextMain from './ContextMain'
-import {deleteRequest, getRequest,postRequest, putRequest} from "../api/server"
+import {deleteRequest, getRequest,postRequest, putRequest, SERVER_URL} from "../api/server"
 import EditFolder from '../component/EditFolder';
 import Properties from '../component/Properties';
 import Cookies from "js-cookie";
@@ -223,6 +223,9 @@ export default function ContextValue(props) {
         Alert("Server Error....")
       }
   }
+  const downloadFolder=()=>{
+    window.open(`${SERVER_URL}/download/${getClickFolder.folder_type}/${getClickFolder.folder_access_link}`,"_blank")
+  }
   const pasteFolder=async()=>{
       try{
         if(getShared){
@@ -270,6 +273,7 @@ export default function ContextValue(props) {
             {"name":"Open","action":OpenFolder},
             ...obj,
             {"name":"Delete","action":DeleteFolder},
+            {"name":"Download","action":downloadFolder},
             {"name":"Properties","action":PropertiesFolder},
           ]
       }
@@ -355,6 +359,10 @@ export default function ContextValue(props) {
       try{
           let res=await getRequest("user/")
           if(res.status){
+              let link=String(window.location.href)
+              if(link.endsWith("login") || link.endsWith("signup")){
+                window.location.href="/"
+              }
               setUser(res.user)
           }
           else{
@@ -362,7 +370,11 @@ export default function ContextValue(props) {
               Cookies.remove("token")
               Alert("Session Expire..","error");
             }
-            window.location.href="/login"
+            let link=String(window.location.href)
+              if (!(link.endsWith("login") || link.endsWith("signup"))){
+                window.location.href="/login"
+              }
+                // window.location.href="/"
           }
       }
       catch(e){
@@ -373,6 +385,9 @@ export default function ContextValue(props) {
     fetchFolders()
     // eslint-disable-next-line
   },[getUser,getShared])
+  useEffect(()=>{
+      getUserData()
+  },[])
   return (
     <ContextMain.Provider value={{getShared,getCurrSpace,setShared,editProfile,uploadFile,uploadFolderLogo,getCutFolder,uploadFileRef,open,setOpen,getDialog,setDialog,OpenFolder,getClickFolder,setClickFolder,logout,handleContextMenu,getAnchor,setAnchor,getMenuOption,SetMenuOptions,fetchFolders,getRender,setRender,setShow,getShow,getFolders,setFolders,getAlert,getCurrentDir,setCurrentDir,Alert,loading,setLoading,getUserData,getUser,MoveNext,MovePrev,reloadPage,newFolder,editFolder,getForward,setForward}}>
         {props.children} 
