@@ -1,19 +1,20 @@
-import React, { useContext,useState } from 'react'
+import React, { useContext } from 'react'
 import ContextMain from '../context/ContextMain'
 import Folder from './Folder'
 import "../css/rightbar.css"
+import NullComponent from './NullComponent'
 
 export default function RightBar() {
   const context=useContext(ContextMain)
   return (
     <div className='rightbar-main' >
         {
+          context.getFolders.length===0 && <NullComponent/>
+        }
+        {
           context.getFolders.map((folder)=>{
-            if(folder._id===context.getCutFolder._id){
-                return(<></>)
-            }
             return(
-              <Folder folder={folder} key={folder._id} />
+              <Folder isBlur={folder._id===context.getCutFolder._id} folder={folder} key={folder._id} />
             )
           })
         }

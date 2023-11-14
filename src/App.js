@@ -1,5 +1,5 @@
 import Login from "./component/Login";
-import {Switch,Route} from "react-router-dom"
+import {Routes,Route, Navigate} from "react-router-dom"
 import Signup from "./component/Signup";
 import Loader from "./component/Loader";
 import Alert from "./component/Alert";
@@ -9,7 +9,6 @@ import ContextMain from "./context/ContextMain";
 import Home from "./component/Home";
 import DialogBox from "./component/DialogBox";
 import { postRequestFile } from "./api/server";
-import NewNav from "./component/NewNav";
 function App() {
   const context=useContext(ContextMain)
   const handleChange=async(file)=>{
@@ -70,28 +69,20 @@ function App() {
   }
   }
   return (
-    <div>
+    <>
       <input style={{display:"none"}} type="file" multiple ref={context.uploadFileRef} onChange={handleChange} />
       <input style={{display:"none"}} type="file" accept=".jpg,.png" ref={context.uploadFolderLogo} onChange={handleLogoChange} />
       {context.getAlert.status && <Alert type={context.getAlert.type} msg={context.getAlert.msg}/>}
       {context.getShow && <FolderMenu x={context.getAnchor.x} y={context.getAnchor.y}/>}
       <DialogBox/>
       <Loader/>
-      <Switch>
-      <Route exact path="/login">
-        <Login/>
-      </Route>
-      <Route exact path="/nav">
-        <NewNav/>
-      </Route>
-      <Route exact path="/signup">
-        <Signup/>
-      </Route>
-      <Route exact path="/">
-        <Home/>
-      </Route> 
-      </Switch>
-    </div>
+      <Routes>
+      <Route path="/login" element={<Login/>} />
+      <Route path="/signup" element={<Signup/>} />
+      <Route path="/" element={<Home/>} />
+      <Route path="/*" element={<Navigate to={"/"}/>} />
+      </Routes>
+    </>
   );
 }
 

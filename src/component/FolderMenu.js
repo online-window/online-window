@@ -9,8 +9,8 @@ export default function FolderMenu(props) {
     <div className="menu" style={{left:props.x,top:props.y}}>
         {options.map((item)=>{
           return(
-            <div className='menu-item-main'>
-            <div className="menu-item" onClick={()=>{item.action(props.folder)}}>
+            <div key={item.name} className='menu-item-main'>
+            <div className="menu-item" onMouseDown={(e)=>{e.stopPropagation();e.preventDefault();item.action(props.folder);context.setShow(false)}}>
               {item.name}
             </div>
             <Divider/>

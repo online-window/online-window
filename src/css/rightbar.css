@@ -4,5 +4,5 @@
     width: 100%;
     height: 100%;
     overflow-y: scroll;
-    /* padding-block: 10px; */
+    margin-block: 10px;
 }

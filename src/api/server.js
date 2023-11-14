@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 const axios=require('axios');
-// const SERVER_URL="https://onlinewindow.glitch.me"
-const SERVER_URL="http://localhost:3000"
+const SERVER_URL="https://onlinewindow.glitch.me"
+// const SERVER_URL="http://localhost:3000"
 const getRequest=async(url)=>{
     try{
         let res=await fetch(`${SERVER_URL}/${url}`,{

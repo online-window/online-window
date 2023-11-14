@@ -3,9 +3,11 @@ import '../css/signup.css'
 import {postRequest} from "../api/server"
 import {Grid,Button,TextField} from "@material-ui/core"
 import ContextMain from '../context/ContextMain'
+import { useNavigate } from 'react-router'
 export default function Signup() {
+    const history= useNavigate();
     const context=useContext(ContextMain)
-    const [getData,setData]=useState({'emailid':"","password":"","name":""})
+    const [getData,setData]=useState({emailid:"",password:"",name:""})
     const formRef=useRef()
     const handleClick=async(e)=>{
         context.setLoading(true)
@@ -14,7 +16,7 @@ export default function Signup() {
         context.setLoading(false)
         if(res.status){
             context.Alert("SignUp SuccessFully","success")
-            window.location.href="/"
+            history("/",{replace:true});
         }
         else{
             alert(res.error)
@@ -44,19 +46,16 @@ export default function Signup() {
                                 <TextField fullWidth variant="standard" onChange={(e)=>{setUserData(e,"password")}} required={true}  label="Password" type="password"  />
                             </Grid>
                             <Grid style={{margin:20}} item xs={12}>
-                                <Button fullWidth variant="outlined" color="secondary" type="submit" >Signup</Button>
+                                <Button fullWidth variant="outlined" color="primary" type="submit" >Signup</Button>
                             </Grid>
                             </form>
                             <Grid style={{margin:20}} item xs={12}>
                                 <div class="signup-sec-2-txt">
-                                    If You Already Have Account ? <span onClick={()=>{window.location.href="/login"}} className='signup-sec-2-warn'>Login</span>
+                                    If You Already Have Account ? <span onClick={()=>{history("/login",{replace:true})}} className='signup-sec-2-warn'>Login</span>
                                 </div>
                             </Grid>
                     </Grid>
             </div>
-        </div>
-        <div className='signup-sec-1'>
-            <img className='signup-sec-1-img' src="https://t4.ftcdn.net/jpg/01/19/11/55/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg" alt="..."/>
         </div>
     </div>
   )

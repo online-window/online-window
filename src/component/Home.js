@@ -18,9 +18,6 @@ export default function Home() {
       <NewNav/>
       </div>
       <div className='home-middle'>
-        {/* <div className='home-left'>
-      <LeftBar/>
-        </div> */}
         <div className='home-right'>
       <RightBar/>
         </div>

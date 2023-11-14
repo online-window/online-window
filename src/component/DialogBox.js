@@ -4,11 +4,10 @@ import Dialog from '@material-ui/core/Dialog';
 import ContextMain from '../context/ContextMain';
 export default function DialogBox() {
     const context=useContext(ContextMain)
-    console.log(context.open)
   return (
-    <div style={{width:"100%"}}>
+    <div style={{width:"100%"}} onMouseDown={(e)=>{e.stopPropagation();}}>
 
-    <Dialog  onClose={()=>{context.setOpen(false)}} open={context.open}>
+    <Dialog style={{zIndex:100}}  onClose={()=>{context.setOpen(false)}} open={context.open}>
         <DialogTitle>
             {context.getDialog.title}
         </DialogTitle>

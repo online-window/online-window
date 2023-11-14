@@ -8,9 +8,8 @@ export default function Alert(props) {
     else if(props.type==="warning"){
         color="rgba(255,255,0,0.8)"
     }
-    // alert(color)
   return (
-    <div style={{backgroundColor:color}} className='alert'>
+    <div style={{backgroundColor:color,zIndex:300}} className='alert'>
         {props.msg}
     </div>
   )

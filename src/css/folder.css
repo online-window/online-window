@@ -3,42 +3,46 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 20%; 
-    height: 50%;
+    width: 15%; 
+    height: 30%;
+    padding: 10px;
     margin:25px;
-    margin-inline: 30px;
     cursor: default;
-}
-
-.folder-main:hover{
-    background-color: rgba(185, 185, 240,0.5);
 }
 
 .folder-logo-main{
     width: 100%;
     height: 80%;
-}
-
-.folder-logo{
-    width: 100%;
-    height: 100%;
-    font-size: 30px;
-    font-weight: bold;
-    font-style: italic;
-    
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.folder-logo-main img{
+    width: 80%;
+    height: 100%;
 }
 
 .folder-name{
-    width: 100%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 80%;
+    height: 20%; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
     letter-spacing: 1px;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 350;
     font-style: italic;
 }
+
+.folder-main:hover{
+    background-color: rgba(185, 185, 240,0.5);
+    border-radius: 10px;
+}
+
+.folder-main-hover{
+    background-color: rgba(185, 185, 240,0.5);
+    border-radius: 10px;
+}
+
