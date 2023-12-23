@@ -77,7 +77,6 @@ export default function NewNav() {
                     onKeyUp={captureEnter}
                     value={getPath}
                     disabled={!context.getEnable}
-                    onClick={handleTextClick}
                     onChange={(e) => {
                       setPath(e.currentTarget.value);
                     }}
