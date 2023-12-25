@@ -12,10 +12,11 @@ import Properties from "../component/Properties";
 import Cookies from "js-cookie";
 import EditProfile from "../component/EditProfile";
 import AccessLink from "../component/AccessLink";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate, useParams } from "react-router";
 import NewFolder from "../component/NewFolder";
 export default function ContextValue(props) {
   const history = useNavigate();
+  const params = useParams();
   const [getAlert, setAlert] = useState({
     status: false,
     msg: "Server Error...",
@@ -156,6 +157,7 @@ export default function ContextValue(props) {
         folder_name: getClickFolder.folder_name,
         _id: getClickFolder._id,
       });
+      history(`/${getClickFolder._id}`)
       setCurrentDir(curr);
       setRender(!getRender);
       setShow(false);
@@ -282,6 +284,14 @@ export default function ContextValue(props) {
     if (curr[curr.length - 1]._id !== null) {
       curr.pop();
       setCurrentDir(curr);
+      if(!getShared){
+        if(curr[curr.length-1]._id){
+          history(curr[curr.length-1]._id);
+        }
+        else{
+          history("/");
+        }
+      }
       setRender(!getRender);
       fetchFolders();
     }
@@ -292,6 +302,14 @@ export default function ContextValue(props) {
       curr.pop();
     }
     setCurrentDir(curr);
+    if(!getShared){
+      if(curr[curr.length-1]._id){
+        history(`/${curr[curr.length-1]._id}`);
+      }
+      else{
+        history("/");
+      }
+    }
     setRender(!getRender);
     fetchFolders();
   };
@@ -443,6 +461,9 @@ export default function ContextValue(props) {
 
   const fetchFolders = async (path) => {
     try {
+      let path_list = window.location.pathname.split("/");
+      let id = path_list[path_list.length-1];
+      
       if (getShared) {
         path = `folder/other/path?path=${(path ? path : getCurrentDir)
           .map((item) => item.folder_name)
@@ -451,10 +472,16 @@ export default function ContextValue(props) {
           path += `&id=${getCurrentDir[1]._id}`;
         }
       } else {
-        path = `folder/path?path=${(path ? path : getCurrentDir)
-          .map((item) => item.folder_name)
-          .join("/")}`;
-      }
+        if(id!="" && !path){
+          path = `folder/path/${id}`
+        }
+        else{
+
+          path = `folder/path?path=${(path ? path : getCurrentDir)
+            .map((item) => item.folder_name)
+            .join("/")}`;
+          }
+        }
       setLoading(true);
       let res = await getRequest(path);
       setLoading(false);
@@ -464,6 +491,12 @@ export default function ContextValue(props) {
       if (res.folders && res.dirs) {
         setFolders(res.folders);
         setCurrentDir(res.dirs);
+        if(res.dirs[res.dirs.length-1]._id && !getShared){
+          history(res.dirs[res.dirs.length-1]._id);
+        }
+        else{
+          history("/");
+        }
         let total_size = 0;
         for (let val of res.folders) {
           total_size += parseFloat(val.space);

@@ -30,7 +30,7 @@ export default function LinkBar(props) {
           )
           .map((item) => {
             return (
-              <Box className="link-sub-div" key={item._id}>
+              <Box className="link-sub-div">
                 <Box className="link-icon">
                   <KeyboardArrowRightRoundedIcon style={{ fontSize: 25 }} />
                 </Box>
