@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 const axios=require('axios');
-const SERVER_URL="https://onlinewindow.glitch.me"
+const SERVER_URL="https://backend-5zk4.onrender.com"
 // const SERVER_URL="http://localhost:5000"
 const getRequest=async(url)=>{
     try{
