@@ -1,8 +1,88 @@
-.rightbar-main{
+/* RightBar Container */
+.rightbar-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    overflow-y: scroll;
-    margin-block: 10px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #fafbff 0%, #f5f7ff 100%);
+}
+
+/* Main Grid Layout */
+.rightbar-main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 24px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 32px;
+    align-content: flex-start;
+}
+
+/* When empty, center the null component */
+.rightbar-main:has(.null-main) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+/* Empty state styling */
+.rightbar-main:empty::before {
+    content: 'No items to display';
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #a0aec0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Custom scrollbar styling */
+.rightbar-main::-webkit-scrollbar {
+    width: 8px;
+}
+
+.rightbar-main::-webkit-scrollbar-track {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 10px;
+    margin: 8px 0;
+}
+
+.rightbar-main::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.rightbar-main::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #764ba2 0%, #667eea 100%);
+    box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
+}
+
+/* Responsive Grid Adjustments */
+@media only screen and (max-width: 1200px) {
+    .rightbar-main {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 20px;
+        padding: 28px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .rightbar-main {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 16px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .rightbar-main {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+        padding: 16px;
+    }
 }

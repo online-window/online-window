@@ -1,48 +1,291 @@
-.folder-main{
+/* Folder Component */
+.folder-main {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 15%; 
-    height: 30%;
-    padding: 10px;
-    margin:25px;
-    cursor: default;
+    width: calc(100% - 16px);
+    aspect-ratio: 1;
+    padding: 14px;
+    margin: 8px;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    border: 2px solid rgba(102, 126, 234, 0.08);
+    position: relative;
+    overflow: hidden;
+    outline: none;
 }
 
-.folder-logo-main{
+.folder-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 14px;
+}
+
+.folder-main > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Logo Wrapper */
+.folder-logo-wrapper {
     width: 100%;
-    height: 80%;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 10px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.folder-logo-main img{
-    width: 80%;
-    height: 100%;
+.folder-logo-image {
+    width: 60%;
+    max-width: 64px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.15));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.folder-name{
-    width: 80%;
-    height: 20%; 
+/* Folder Name */
+.folder-name {
+    width: 100%;
+    padding: 0 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
-    letter-spacing: 1px;
-    font-size: 20px;
-    font-weight: 350;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    margin-top: auto;
+    letter-spacing: 0.2px;
+}
+
+/* Hover State */
+.folder-main:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.03), rgba(118, 75, 162, 0.03));
+    border-color: rgba(102, 126, 234, 0.25);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15),
+                0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.folder-main:hover::before {
+    opacity: 1;
+}
+
+.folder-main:hover .folder-logo-wrapper {
+    transform: scale(1.08);
+}
+
+.folder-main:hover .folder-logo-image {
+    filter: drop-shadow(0 4px 16px rgba(102, 126, 234, 0.35));
+}
+
+.folder-main:hover .folder-name {
+    color: #667eea;
+    font-weight: 700;
+}
+
+/* Selected/Active State */
+.folder-main-selected {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
+    border-color: #667eea;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.25),
+                0 0 0 3px rgba(102, 126, 234, 0.15);
+    transform: scale(1.02);
+}
+
+.folder-main-selected::before {
+    opacity: 1;
+}
+
+.folder-main-selected .folder-name {
+    color: #667eea;
+    font-weight: 700;
+}
+
+.folder-main-selected .folder-logo-image {
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.4));
+}
+
+/* Active/Click State */
+.folder-main:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+/* Focus State */
+.folder-main:focus-visible {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Cut Operation State */
+.folder-cut {
+    opacity: 0.6;
+    border: 2px dashed rgba(239, 68, 68, 0.4) !important;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(239, 68, 68, 0.02),
+        rgba(239, 68, 68, 0.02) 10px,
+        rgba(239, 68, 68, 0.04) 10px,
+        rgba(239, 68, 68, 0.04) 20px
+    );
+    animation: cutPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    position: relative;
+}
+
+.folder-cut::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(239, 68, 68, 0.08), 
+        rgba(220, 38, 38, 0.08));
+    border-radius: 14px;
+    pointer-events: none;
+}
+
+.folder-cut .folder-logo-wrapper {
+    filter: grayscale(0.5) brightness(0.95);
+    transform: scale(0.95);
+}
+
+.folder-cut .folder-logo-image {
+    filter: drop-shadow(0 2px 8px rgba(239, 68, 68, 0.2));
+}
+
+.folder-cut .folder-name {
+    color: #9ca3af;
     font-style: italic;
 }
 
-.folder-main:hover{
-    background-color: rgba(185, 185, 240,0.5);
-    border-radius: 10px;
+/* Cut Badge */
+.folder-cut-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3),
+                0 4px 16px rgba(239, 68, 68, 0.2);
+    z-index: 10;
+    animation: cutBadgeSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.folder-main-hover{
-    background-color: rgba(185, 185, 240,0.5);
-    border-radius: 10px;
+.folder-cut-icon {
+    font-size: 13px;
+    line-height: 1;
+    color: white;
+    animation: cutIconRotate 1.5s ease-in-out infinite;
+    display: inline-block;
 }
 
+.folder-cut-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* Cut Animations */
+@keyframes cutPulse {
+    0%, 100% {
+        opacity: 0.6;
+        border-color: rgba(239, 68, 68, 0.4);
+    }
+    50% {
+        opacity: 0.5;
+        border-color: rgba(239, 68, 68, 0.6);
+    }
+}
+
+@keyframes cutBadgeSlide {
+    from {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes cutIconRotate {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+/* Hover on Cut Folder */
+.folder-cut:hover {
+    opacity: 0.7;
+    transform: translateY(-2px);
+    border-color: rgba(239, 68, 68, 0.6) !important;
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25),
+                0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.folder-cut:hover .folder-cut-badge {
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4),
+                0 6px 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .folder-main {
+        padding: 12px;
+        border-radius: 14px;
+    }
+    
+    .folder-logo-image {
+        max-width: 56px;
+    }
+    
+    .folder-name {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .folder-main {
+        padding: 10px;
+        border-radius: 12px;
+    }
+    
+    .folder-logo-image {
+        max-width: 48px;
+    }
+    
+    .folder-name {
+        font-size: 11px;
+    }
+}

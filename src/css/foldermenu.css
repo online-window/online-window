@@ -1,36 +1,196 @@
-.menu {
-    font-size: 14px;
-    background-color: #fff;
-    border-radius: 5px;
-    /* padding: 5px 0 5px 0; */
-    width: 150px;
-    height: auto;
-    margin: 0;
-  /* use absolute positioning  */
+/* Folder Context Menu */
+.folder-menu {
     position: absolute;
-    list-style: none;
-    box-shadow: 0 0 20px 0 #ccc;
-    opacity: 1;
-    transition: opacity 0.5s linear;
+    min-width: 200px;
+    background: white;
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.25), 
+                0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.15);
     z-index: 1000;
-    /* padding: 20px; */
-  }
-
-.menu-item{
-  font-size: 20px;
-  text-align: center;
-  cursor: default;
-  font-style: italic;
-  font-weight: 400;
-  padding-block: 10px;
-  width: 100%;
-}
-.menu-item-main{
-  padding-inline: 20px;
+    opacity: 0;
+    animation: menuFadeIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    backdrop-filter: blur(10px);
 }
 
-.menu-item-main:hover{
-  background-color: rgba(185, 185, 240,0.5);
-  font-weight: 600;
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
+.folder-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.folder-menu-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    transform: scaleY(0);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border-radius: 0 4px 4px 0;
+}
+
+.folder-menu-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 10px;
+}
+
+.folder-menu-item:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.06), rgba(118, 75, 162, 0.06));
+    transform: translateX(6px);
+    padding-left: 18px;
+}
+
+.folder-menu-item:hover::before {
+    transform: scaleY(1);
+}
+
+.folder-menu-item:hover::after {
+    opacity: 1;
+}
+
+.folder-menu-item:active {
+    transform: translateX(6px) scale(0.97);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
+}
+
+.folder-menu-icon {
+    font-size: 18px !important;
+    color: #667eea;
+    transition: all 0.2s ease;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+}
+
+.folder-menu-item:hover .folder-menu-icon {
+    transform: scale(1.15) rotate(5deg);
+    filter: drop-shadow(0 3px 8px rgba(102, 126, 234, 0.4));
+}
+
+.folder-menu-icon-danger {
+    color: #ef4444;
+    filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.2));
+}
+
+.folder-menu-item:hover .folder-menu-icon-danger {
+    filter: drop-shadow(0 3px 8px rgba(239, 68, 68, 0.4));
+}
+
+.folder-menu-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+    letter-spacing: 0.3px;
+    transition: all 0.2s ease;
+    z-index: 1;
+}
+
+.folder-menu-item:hover .folder-menu-text {
+    color: #667eea;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.folder-menu-item-danger:hover .folder-menu-text {
+    color: #ef4444;
+}
+
+.folder-menu-item-danger::before {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.folder-menu-item-danger:hover {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.06), rgba(220, 38, 38, 0.06));
+}
+
+.folder-menu-item-danger::after {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+}
+
+.folder-menu-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.15), transparent);
+    margin: 6px 8px;
+}
+
+/* Staggered animation for menu items */
+.folder-menu-item {
+    animation: menuItemSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.folder-menu-item:nth-child(2) {
+    animation-delay: 0.03s;
+}
+
+.folder-menu-item:nth-child(4) {
+    animation-delay: 0.06s;
+}
+
+.folder-menu-item:nth-child(6) {
+    animation-delay: 0.09s;
+}
+
+.folder-menu-item:nth-child(8) {
+    animation-delay: 0.12s;
+}
+
+.folder-menu-item:nth-child(10) {
+    animation-delay: 0.15s;
+}
+
+.folder-menu-item:nth-child(12) {
+    animation-delay: 0.18s;
+}
+
+.folder-menu-item:nth-child(14) {
+    animation-delay: 0.21s;
+}
+
+@keyframes menuItemSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Ripple effect on click */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}

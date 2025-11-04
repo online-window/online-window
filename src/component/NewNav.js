@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
-import ReplayIcon from "@material-ui/icons/Replay";
+import ArrowBackRoundedIcon from "@material-ui/icons/ArrowBackRounded";
+import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 import { TextField } from "@material-ui/core";
 import ContextMain from "../context/ContextMain";
 import "../css/newnav.css";
@@ -36,66 +36,63 @@ export default function NewNav() {
   };
   return (
     <div className="nav-main">
-      <div className="nav-submain">
-        <div className="nav-menu">
-          <SideBar />
+      <div className="nav-container">
+        <div className="nav-left">
+          <div className="nav-menu">
+            <SideBar />
+          </div>
+          <div className="nav-brand">
+            <div className="nav-logo" tabIndex="0" onKeyUp={(event)=>{if(event.key==="Enter"){window.location.reload()}}} onClick={()=>{window.location.reload()}}>
+              <span className="nav-logo-icon">CT</span>
+              <span className="nav-logo-text">Drive</span>
+            </div>
+          </div>
         </div>
-        <div className="nav-pro-logo">
-          <div className="nav-logo" tabIndex="0" onKeyUp={(event)=>{if(event.key==="Enter"){window.location.reload()}}} onClick={()=>{window.location.reload()}}>My Drive</div>
-        </div>
-        <div className="nav-part">
-          <div className="nav-part-sub1">
-            <div className="nav-search">
-              <div
+        
+        <div className="nav-center">
+          <div className="nav-search-bar">
+            <button
+              className="nav-icon-btn nav-back-btn"
               tabIndex="0"
               onKeyUp={(event)=>{if(event.key==="Enter"){context.MovePrev()}}}
-                onClick={context.MovePrev}
-                style={{ width: "5%", textAlign: "center" }}
-              >
-                <KeyboardBackspaceIcon
-
-                  style={{
-                    color:
-                      context.getCurrentDir[context.getCurrentDir.length - 1]
-                        ._id === null
-                        ? "grey"
-                        : "black",
-                    cursor:
-                      context.getCurrentDir[context.getCurrentDir.length - 1]
-                        ._id === null
-                        ? "default"
-                        : "pointer",
-                  }}
-                />
-              </div>
-              <div style={{ width: "90%" }}>
-                {!context.getEnable ? (
-                  <LinkBar setEnable={context.setEnable} />
-                ) : (
-                  <TextField
+              onClick={context.MovePrev}
+              disabled={context.getCurrentDir[context.getCurrentDir.length - 1]._id === null}
+              aria-label="Go back"
+              title="Go back"
+            >
+              <ArrowBackRoundedIcon />
+            </button>
+            
+            <div className="nav-path-container">
+              {!context.getEnable ? (
+                <LinkBar setEnable={context.setEnable} />
+              ) : (
+                <TextField
                   tabIndex="0"
-                    onKeyUp={captureEnter}
-                    value={getPath}
-                    disabled={!context.getEnable}
-                    onChange={(e) => {
-                      setPath(e.currentTarget.value);
-                    }}
-                    variant="outlined"
-                    style={{ width: "100%", backgroundColor: "white" }}
-                    fullwWidth
-                  />
-                )}
-              </div>
+                  onKeyUp={captureEnter}
+                  value={getPath}
+                  disabled={!context.getEnable}
+                  onChange={(e) => {
+                    setPath(e.currentTarget.value);
+                  }}
+                  variant="outlined"
+                  size="small"
+                  className="nav-path-input"
+                  fullWidth
+                />
+              )}
+            </div>
 
-              <div
+            <button
+              className="nav-icon-btn nav-reload-btn"
               tabIndex="0"
               onKeyUp={(event)=>{if(event.key==="Enter"){context.reloadPage()}}}
-                onClick={context.reloadPage}
-                style={{ width: "5%", textAlign: "center" }}
-              >
-                <ReplayIcon style={{ cursor: "pointer" }} />
-              </div>
-            </div>
+              onClick={context.reloadPage}
+              aria-label="Reload"
+              title="Reload"
+            >
+              <RefreshRoundedIcon />
+            </button>
           </div>
         </div>
       </div>

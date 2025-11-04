@@ -1,73 +1,464 @@
-.main-access{
-        width: 500px;
-        height: max-content;
-        padding: 20px;
-}
-
-.access-part-1{
-    width: 100%;
+/* Access Link Container */
+.access-container {
+    width: 520px;
+    max-height: 85vh;
+    padding: 28px;
+    background: white;
+    border-radius: 20px;
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    position: relative;
 }
 
-.access-part-11{
-    width: 70%;
+/* Alert Messages */
+.access-alert {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 90%;
 }
 
-.access-part12{
-    width: 30%;
+.access-alert-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
 }
 
-.access-part-2{
-    margin-block: 20px;
-    width: 95%;
-    width: 100%;
-    height: 150px;
-    overflow-y: scroll;
-    /* border: 1px solid rgb(188, 183, 183); */
+.access-alert-error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
 }
-.access-item-main{
-    /* margin-block: 5px; */
-    padding-block: 10px;
-    border-block: 1px solid rgb(188, 183, 183);
+
+.access-alert-content {
     display: flex;
     align-items: center;
-    width: 100%;
-    
-    cursor: default;
-}
-.access-item-email{
-    margin-inline: 5px;
-    font-size: 18px;
-    width: 90%;
-    font-weight: 400;
-    font-style: italic;
-}
-.access-item-icon{
-    width: 10%;
-
-    cursor: pointer;
-}
-.access-item-icon:hover{
-    color: red;
+    gap: 8px;
 }
 
-.access-part-3{
-    margin-block: 10px;
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
-.access-part-4{
-    margin-block: 20px;
-    border: 1px solid rgb(178, 178, 242);
-    padding: 10px;
-    word-wrap: break-word;
+/* Custom scrollbar */
+.access-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.access-container::-webkit-scrollbar-track {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 10px;
+}
+
+.access-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+}
+
+/* Header */
+.access-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.access-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.access-header-icon {
+    color: #667eea;
+    font-size: 26px !important;
+}
+
+.access-header-title {
+    margin: 0;
     font-size: 20px;
-    font-weight: 400;
-    background-color: aqua;
-    font-style: italic;
-    cursor: pointer;
-    border-radius: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.3px;
 }
 
-.access-part-4:hover{
-    font-weight: bold;
+/* Status Badge */
+.access-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.access-status-public {
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    color: white;
+}
+
+.access-status-private {
+    background: linear-gradient(135deg, #ff9800, #ffa726);
+    color: white;
+}
+
+.access-status-icon {
+    font-size: 14px !important;
+}
+
+/* Add User Section */
+.access-add-section {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.access-input-wrapper {
+    flex: 1;
+}
+
+/* TextField Styling */
+.access-textfield {
+    margin-bottom: 0 !important;
+}
+
+.access-textfield-input {
+    border-radius: 12px !important;
+    background: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.access-textfield-input fieldset {
+    border-color: rgba(102, 126, 234, 0.25) !important;
+    border-width: 2px !important;
+    border-radius: 12px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.access-textfield-input:hover fieldset {
+    border-color: rgba(102, 126, 234, 0.5) !important;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.08);
+}
+
+.access-textfield-input.Mui-focused fieldset {
+    border-color: #667eea !important;
+    box-shadow: 0 3px 12px rgba(102, 126, 234, 0.15), 0 0 0 3px rgba(102, 126, 234, 0.08);
+}
+
+.access-textfield-input input {
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+    color: #2d3748 !important;
+    font-weight: 500 !important;
+}
+
+.access-textfield-label {
+    color: #667eea !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+/* Button Base Styling */
+.access-btn {
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    font-size: 13px !important;
+    letter-spacing: 0.2px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2) !important;
+    white-space: nowrap;
+}
+
+.access-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.3) !important;
+}
+
+.access-btn:active {
+    transform: translateY(0);
+}
+
+/* Add User Button */
+.access-btn-add {
+    color: white !important;
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+}
+
+.access-btn-add:hover {
+    background: linear-gradient(135deg, #764ba2, #f093fb) !important;
+}
+
+.access-btn-add:disabled {
+    background: linear-gradient(135deg, #cbd5e0, #a0aec0) !important;
+    color: rgba(255, 255, 255, 0.6) !important;
+    transform: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Users Section */
+.access-users-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.access-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #667eea;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.access-users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2px;
+}
+
+/* User Item */
+.access-user-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: white;
+    border: 2px solid rgba(102, 126, 234, 0.12);
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.access-user-item:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(240, 147, 251, 0.05));
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.access-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.access-user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.access-user-email {
+    font-size: 13px;
+    font-weight: 500;
+    color: #2d3748;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.access-user-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #718096;
+}
+
+.access-user-remove {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(244, 67, 54, 0.1);
+    color: #f44336;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.access-user-remove:hover {
+    background: linear-gradient(135deg, #f44336, #e91e63);
+    color: white;
+    transform: scale(1.1);
+}
+
+.access-user-remove svg {
+    font-size: 18px;
+}
+
+/* Divider */
+.access-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+    margin: 4px 0;
+}
+
+/* Public/Private Section */
+.access-public-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.access-toggle-btn {
+    padding: 12px 20px !important;
+    justify-content: flex-start !important;
+}
+
+.access-btn-public {
+    color: white !important;
+    background: linear-gradient(135deg, #4caf50, #66bb6a) !important;
+}
+
+.access-btn-public:hover {
+    background: linear-gradient(135deg, #66bb6a, #81c784) !important;
+}
+
+.access-btn-private {
+    color: white !important;
+    background: linear-gradient(135deg, #ff9800, #ffa726) !important;
+}
+
+.access-btn-private:hover {
+    background: linear-gradient(135deg, #ffa726, #ffb74d) !important;
+}
+
+.access-toggle-hint {
+    font-size: 12px;
+    color: #718096;
+    font-weight: 500;
+    padding: 0 2px;
+    line-height: 1.4;
+}
+
+/* Link Section */
+.access-link-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.access-link-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: white;
+    border: 2px dashed rgba(102, 126, 234, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.access-link-box:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.06), rgba(240, 147, 251, 0.06));
+    border-color: #667eea;
+    border-style: solid;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.2);
+}
+
+.access-link-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.access-link-icon svg {
+    font-size: 18px;
+}
+
+.access-link-url {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 500;
+    color: #667eea;
+    word-break: break-all;
+    line-height: 1.5;
+}
+
+.access-link-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #718096;
+    font-weight: 500;
+}
+
+.access-hint-icon {
+    font-size: 13px !important;
+    color: #667eea;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 700px) {
+    .access-container {
+        width: 100%;
+        max-width: 480px;
+        padding: 20px;
+    }
+
+    .access-add-section {
+        flex-direction: column;
+    }
+
+    .access-btn-add {
+        width: 100%;
+    }
+
+    .access-header-title {
+        font-size: 18px;
+    }
+
+    .access-link-url {
+        font-size: 11px;
+    }
 }

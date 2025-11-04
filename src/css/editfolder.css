@@ -1,0 +1,276 @@
+/* Edit Folder Container */
+.editfolder-container {
+    width: 480px;
+    max-height: 85vh;
+    padding: 28px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Alert Messages */
+.editfolder-alert {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 90%;
+}
+
+.editfolder-alert-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.editfolder-alert-error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.editfolder-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Custom scrollbar */
+.editfolder-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.editfolder-container::-webkit-scrollbar-track {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 10px;
+}
+
+.editfolder-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+}
+
+/* Header */
+.editfolder-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 4px;
+}
+
+.editfolder-header-icon {
+    font-size: 26px !important;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.editfolder-header-title {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.3px;
+}
+
+/* Form Section */
+.editfolder-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editfolder-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.editfolder-field-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editfolder-field-icon svg {
+    font-size: 20px !important;
+}
+
+.editfolder-field:hover .editfolder-field-icon {
+    transform: scale(1.05) rotate(5deg);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+/* TextField Styling */
+.editfolder-textfield {
+    flex: 1;
+}
+
+.editfolder-textfield .MuiOutlinedInput-root {
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editfolder-textfield .MuiOutlinedInput-root fieldset {
+    border-color: rgba(102, 126, 234, 0.2);
+    transition: all 0.3s ease;
+}
+
+.editfolder-textfield .MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+.editfolder-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #667eea;
+    border-width: 2px;
+}
+
+.editfolder-textfield .MuiInputLabel-root.Mui-focused {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.editfolder-textfield .MuiOutlinedInput-input {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+/* Info Badge */
+.editfolder-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.editfolder-info-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #667eea;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.editfolder-info-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    font-family: 'Courier New', monospace;
+}
+
+/* Actions */
+.editfolder-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* Button Styling */
+.editfolder-button {
+    padding: 12px 32px !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    text-transform: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: none !important;
+}
+
+.editfolder-button-save {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.editfolder-button-save::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.editfolder-button-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4) !important;
+}
+
+.editfolder-button-save:hover::before {
+    opacity: 1;
+}
+
+.editfolder-button-save:active {
+    transform: translateY(0);
+}
+
+.editfolder-button-save .MuiButton-label {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .editfolder-container {
+        width: 90vw;
+        max-width: 480px;
+        padding: 24px;
+    }
+
+    .editfolder-field {
+        gap: 10px;
+    }
+
+    .editfolder-field-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+
+    .editfolder-field-icon svg {
+        font-size: 18px !important;
+    }
+
+    .editfolder-button {
+        padding: 10px 24px !important;
+        font-size: 13px !important;
+    }
+}

@@ -1,0 +1,116 @@
+/* Dialog Box Styling */
+.dialogbox-wrapper {
+  width: 100%;
+}
+
+/* Backdrop */
+.dialogbox-backdrop {
+  background-color: rgba(102, 126, 234, 0.15) !important;
+}
+
+/* Dialog Paper */
+.dialogbox-paper {
+  border-radius: 20px !important;
+  box-shadow: 0 24px 48px rgba(102, 126, 234, 0.2) !important;
+  overflow: hidden !important;
+  max-width: 90vw;
+  max-height: 90vh;
+  background: transparent !important;
+  margin: 20px;
+}
+
+/* Container */
+.dialogbox-container {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 20px;
+  position: relative;
+  animation: dialogSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header (optional - only shown if title exists) */
+.dialogbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 16px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(240, 147, 251, 0.08));
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  position: relative;
+}
+
+.dialogbox-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #667eea;
+  flex: 1;
+}
+
+.dialogbox-close-btn {
+  padding: 8px !important;
+  color: #667eea !important;
+  transition: all 0.3s ease !important;
+  margin-left: 16px;
+}
+
+.dialogbox-close-btn:hover {
+  background-color: rgba(102, 126, 234, 0.1) !important;
+  transform: rotate(90deg) scale(1.1);
+}
+
+.dialogbox-close-btn svg {
+  font-size: 24px;
+}
+
+/* Content */
+.dialogbox-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+/* Animation */
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 600px) {
+  .dialogbox-paper {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+    max-height: calc(100vh - 32px);
+  }
+
+  .dialogbox-header {
+    padding: 20px 20px 12px;
+  }
+
+  .dialogbox-title {
+    font-size: 18px;
+  }
+
+  .dialogbox-close-btn {
+    padding: 6px !important;
+  }
+
+  .dialogbox-close-btn svg {
+    font-size: 22px;
+  }
+}
+
+/* Focus visible for accessibility */
+.dialogbox-close-btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}

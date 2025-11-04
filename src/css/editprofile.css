@@ -1,0 +1,306 @@
+/* Edit Profile Container */
+.editprofile-container {
+    width: 480px;
+    max-height: 85vh;
+    padding: 28px;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Alert Messages */
+.editprofile-alert {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 90%;
+}
+
+.editprofile-alert-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.editprofile-alert-error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.editprofile-alert-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Custom scrollbar */
+.editprofile-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.editprofile-container::-webkit-scrollbar-track {
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 10px;
+}
+
+.editprofile-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 10px;
+}
+
+/* Header */
+.editprofile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 4px;
+}
+
+.editprofile-header-icon {
+    font-size: 26px !important;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.editprofile-header-title {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.3px;
+}
+
+/* Avatar Section */
+.editprofile-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 0;
+}
+
+.editprofile-avatar-wrapper {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editprofile-avatar-wrapper:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.35);
+}
+
+.editprofile-avatar-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    z-index: -1;
+    opacity: 0.3;
+}
+
+.editprofile-avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.editprofile-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editprofile-avatar-wrapper:hover .editprofile-avatar-overlay {
+    opacity: 1;
+}
+
+.editprofile-camera-icon {
+    font-size: 48px !important;
+    color: white;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.editprofile-avatar-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #64748b;
+    letter-spacing: 0.2px;
+}
+
+/* Divider */
+.editprofile-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+}
+
+/* Form Section */
+.editprofile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.editprofile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* TextField Styling */
+.editprofile-textfield .MuiOutlinedInput-root {
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.editprofile-textfield .MuiOutlinedInput-root fieldset {
+    border-color: rgba(102, 126, 234, 0.2);
+    transition: all 0.3s ease;
+}
+
+.editprofile-textfield .MuiOutlinedInput-root:hover fieldset {
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+.editprofile-textfield .MuiOutlinedInput-root.Mui-focused fieldset {
+    border-color: #667eea;
+    border-width: 2px;
+}
+
+.editprofile-textfield .MuiInputLabel-root.Mui-focused {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.editprofile-textfield .MuiOutlinedInput-input {
+    font-size: 14px;
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.editprofile-textfield .MuiOutlinedInput-root.Mui-disabled {
+    background: rgba(102, 126, 234, 0.03);
+}
+
+/* Actions */
+.editprofile-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* Button Styling */
+.editprofile-button {
+    padding: 12px 32px !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    text-transform: none !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: none !important;
+}
+
+.editprofile-button-save {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important;
+    color: white !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.editprofile-button-save::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #764ba2, #667eea);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.editprofile-button-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4) !important;
+}
+
+.editprofile-button-save:hover::before {
+    opacity: 1;
+}
+
+.editprofile-button-save:active {
+    transform: translateY(0);
+}
+
+.editprofile-button-save .MuiButton-label {
+    position: relative;
+    z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .editprofile-container {
+        width: 90vw;
+        max-width: 480px;
+        padding: 24px;
+    }
+
+    .editprofile-avatar-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+
+    .editprofile-camera-icon {
+        font-size: 40px !important;
+    }
+
+    .editprofile-button {
+        padding: 10px 24px !important;
+        font-size: 13px !important;
+    }
+}

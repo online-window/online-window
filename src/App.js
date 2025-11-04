@@ -4,7 +4,7 @@ import Signup from "./component/Signup";
 import Loader from "./component/Loader";
 import Alert from "./component/Alert";
 import FolderMenu from "./component/FolderMenu";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import ContextMain from "./context/ContextMain";
 import Home from "./component/Home";
 import DialogBox from "./component/DialogBox";

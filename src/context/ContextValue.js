@@ -399,7 +399,7 @@ export default function ContextValue(props) {
       let obj = [];
       if (!getShared) {
         obj = [
-          { name: "Edit", action: editFolder },
+          { name: "Rename", action: editFolder },
           { name: "Cut", action: MoveFolder },
           { name: "Get Link", action: getAccessLink },
           { name: "Edit Logo", action: EditFolderLogo },

@@ -1,33 +1,236 @@
 .link-main{
-    padding: 5px;
     display: flex;
+    align-items: center;
     width: 100%;
-    font-size: 18px;
+    min-height: 40px;
+    gap: 6px;
+    padding: 0;
 }
-.link-sub-div{
-    display: flex;
-}
-.link-sub{
-    display: flex;
-    width: 95%;
-     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.link-icon{
-    padding: 5px;
-}
-.link-item{
+
+/* Chip Base Styles - Material Design 3 Inspired */
+.link-chip{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 20px;
     cursor: pointer;
-    padding: 5px;
-    border-radius: 5px;
-    max-width: 150px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.link-chip::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(102, 126, 234, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.link-chip:hover::before{
+    width: 200%;
+    height: 200%;
+}
+
+.link-chip-icon{
+    font-size: 18px !important;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.link-chip-text{
+    position: relative;
+    z-index: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: 140px;
 }
 
-.link-item:hover{
-    background-color: rgba(185, 185, 240,0.5);
-    border-radius: 5px;
+/* Home Chip - Special Styling */
+.link-home-chip{
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
+    padding-right: 10px;
+}
+
+.link-home-chip::before{
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.link-home-chip:hover{
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+}
+
+.link-home-chip:active{
+    transform: scale(0.98);
+}
+
+.link-edit-icon{
+    font-size: 14px !important;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.link-home-chip:hover .link-edit-icon{
+    opacity: 0.8;
+}
+
+.link-home-chip:hover .link-chip-icon{
+    transform: rotate(15deg) scale(1.1);
+}
+
+/* Folder Chip - Interactive */
+.link-folder-chip{
+    background: rgba(102, 126, 234, 0.08);
+    color: #4a5568;
+    border: 1.5px solid rgba(102, 126, 234, 0.15);
+}
+
+.link-folder-chip:hover{
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.3);
+    color: #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.link-folder-chip:hover .link-chip-icon{
+    transform: scale(1.15);
+    color: #667eea;
+}
+
+.link-folder-chip:active{
+    transform: scale(0.97);
+}
+
+/* Active Folder Chip (Current Directory) */
+.link-chip-active{
+    background: rgba(102, 126, 234, 0.18);
+    border-color: rgba(102, 126, 234, 0.4);
+    color: #667eea;
+    font-weight: 600;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.link-chip-active .link-chip-icon{
+    color: #667eea;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Breadcrumb Container */
+.link-breadcrumb{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 2px 0;
+}
+
+.link-breadcrumb::-webkit-scrollbar{
+    display: none;
+}
+
+.link-breadcrumb-item{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Separator - Modern Arrow */
+.link-separator{
+    display: flex;
+    align-items: center;
+    color: #cbd5e0;
+    margin: 0 2px;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+}
+
+.link-separator svg{
+    font-size: 20px;
+}
+
+.link-breadcrumb-item:hover .link-separator{
+    color: #a0aec0;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px){
+    .link-chip{
+        padding: 5px 10px;
+        gap: 5px;
+        font-size: 12px;
+    }
+    
+    .link-chip-icon{
+        font-size: 16px !important;
+    }
+    
+    .link-chip-text{
+        max-width: 100px;
+    }
+    
+    .link-home-chip .link-chip-text{
+        display: none;
+    }
+    
+    .link-home-chip{
+        padding: 6px;
+    }
+    
+    .link-edit-icon{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 480px){
+    .link-chip{
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .link-chip-icon{
+        font-size: 14px !important;
+    }
+    
+    .link-chip-text{
+        max-width: 70px;
+    }
+    
+    .link-separator svg{
+        font-size: 18px;
+    }
 }

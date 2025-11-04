@@ -6,8 +6,10 @@ import NullComponent from './NullComponent'
 
 export default function RightBar() {
   const context=useContext(ContextMain)
+  
   return (
-    <div className='rightbar-main' >
+    <div className='rightbar-container'>
+      <div className='rightbar-main'>
         {
           context.getFolders.length===0 && <NullComponent/>
         }
@@ -18,6 +20,7 @@ export default function RightBar() {
             )
           })
         }
+      </div>
     </div>
   )
 }

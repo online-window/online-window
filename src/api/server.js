@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 const axios=require('axios');
-const SERVER_URL="https://backend-5zk4.onrender.com"
-// const SERVER_URL="http://localhost:5000"
+const SERVER_URL=process.env.REACT_APP_SERVER_URL || "http://localhost:3000"
 const getRequest=async(url)=>{
     try{
         let res=await fetch(`${SERVER_URL}/${url}`,{

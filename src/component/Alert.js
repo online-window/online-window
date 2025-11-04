@@ -1,16 +1,27 @@
 import React from 'react';
 import "../css/alert.css";
+import CheckCircleRounded from '@material-ui/icons/CheckCircleRounded';
+import ErrorRounded from '@material-ui/icons/ErrorRounded';
+import WarningRounded from '@material-ui/icons/WarningRounded';
+
 export default function Alert(props) {
-    var color="rgba(255,0,0,0.8)";
-    if(props.type==="success"){
-        color="rgba(0,255,0,0.8)";
+    const getIcon = () => {
+        if(props.type === "success"){
+            return <CheckCircleRounded className='alert-icon' />;
+        }
+        else if(props.type === "warning"){
+            return <WarningRounded className='alert-icon' />;
+        }
+        return <ErrorRounded className='alert-icon' />;
     }
-    else if(props.type==="warning"){
-        color="rgba(255,255,0,0.8)"
-    }
-  return (
-    <div style={{backgroundColor:color,zIndex:300}} className='alert'>
-        {props.msg}
-    </div>
-  )
+
+    return (
+        <div className={`alert alert-${props.type}`}>
+            <div className='alert-content'>
+                {getIcon()}
+                <span className='alert-message'>{props.msg}</span>
+            </div>
+            <div className='alert-progress'></div>
+        </div>
+    )
 }

@@ -1,15 +1,18 @@
 import React, { useContext } from "react";
-import ComputerRoundedIcon from "@material-ui/icons/ComputerRounded";
-import KeyboardArrowRightRoundedIcon from "@material-ui/icons/KeyboardArrowRightRounded";
+import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
+import NavigateNextRoundedIcon from "@material-ui/icons/NavigateNextRounded";
+import FolderRoundedIcon from "@material-ui/icons/FolderRounded";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import ContextMain from "../context/ContextMain";
-import { Box } from "@material-ui/core";
 import "../css/links.css";
+
 export default function LinkBar(props) {
   const context = useContext(ContextMain);
+  
   return (
-    <Box className="link-main">
-      <Box
-        className="link-item"
+    <div className="link-main">
+      <button
+        className="link-chip link-home-chip"
         tabIndex="0"
         onKeyUp={(event) => {
           if (event.key === "Enter") {
@@ -19,22 +22,29 @@ export default function LinkBar(props) {
         onClick={() => {
           props.setEnable(true);
         }}
+        aria-label="Home directory"
+        title="Click to edit path"
       >
-        <ComputerRoundedIcon style={{ fontSize: 25 }} />
-      </Box>
-      <Box className="link-sub">
+        <HomeRoundedIcon className="link-chip-icon" />
+        <span className="link-chip-text">Home</span>
+        <EditRoundedIcon className="link-edit-icon" />
+      </button>
+      
+      <div className="link-breadcrumb">
         {context.getCurrentDir
           .slice(
-            Math.max(0, context.getCurrentDir.length - 6),
+            Math.max(0, context.getCurrentDir.length - 5),
             context.getCurrentDir.length
           )
-          .map((item) => {
+          .map((item, index, array) => {
+            const isLast = index === array.length - 1;
             return (
-              <Box className="link-sub-div">
-                <Box className="link-icon">
-                  <KeyboardArrowRightRoundedIcon style={{ fontSize: 25 }} />
-                </Box>
-                <Box
+              <div className="link-breadcrumb-item" key={index}>
+                <div className="link-separator">
+                  <NavigateNextRoundedIcon />
+                </div>
+                <button
+                  className={`link-chip link-folder-chip ${isLast ? 'link-chip-active' : ''}`}
                   tabIndex="0"
                   onKeyUp={(event) => {
                     if (event.key === "Enter") {
@@ -45,14 +55,15 @@ export default function LinkBar(props) {
                     context.MoveToFolder(item.folder_name);
                   }}
                   title={item.folder_name}
-                  className="link-item"
+                  aria-label={`Navigate to ${item.folder_name}`}
                 >
-                  {item.folder_name}
-                </Box>
-              </Box>
+                  <FolderRoundedIcon className="link-chip-icon" />
+                  <span className="link-chip-text">{item.folder_name}</span>
+                </button>
+              </div>
             );
           })}
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }

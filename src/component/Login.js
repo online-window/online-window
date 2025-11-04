@@ -3,41 +3,58 @@ import "../css/login.css";
 import ContextMain from "../context/ContextMain";
 import { postRequest } from "../api/server";
 import { Grid, Button, TextField } from "@material-ui/core";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const context = useContext(ContextMain);
   const history = useNavigate();
   const [getData, setData] = useState({ emailid: "", password: "" });
+  const [error, setError] = useState("");
   const formRef = useRef();
   const handleClick = async (e) => {
-    context.setLoading(true);
     e.preventDefault();
-    let res = await postRequest("user/login", getData);
-    context.setLoading(false);
-    if (res.status) {
-      context.Alert("Login SuccessFully", "success");
-      history("/", { replace: true });
-    } else {
-      context.Alert(res.error);
+    setError("");
+    context.setLoading(true);
+    
+    try {
+      let res = await postRequest("user/login", getData);
+      context.setLoading(false);
+      
+      if (res && res.status) {
+        history("/", { replace: true });
+      } else {
+        const errorMsg = res?.error || "Login failed. Please check your credentials.";
+        setError(errorMsg);
+      }
+    } catch (err) {
+      context.setLoading(false);
+      const errorMsg = "Network error. Please check your connection and try again.";
+      setError(errorMsg);
     }
   };
   const setUserData = (e, type) => {
-    let obj = getData;
-    obj[type] = e.currentTarget.value;
-    setData(obj);
+    const value = e.currentTarget.value;
+    setData((prev) => ({ ...prev, [type]: value }));
+    if (error) setError(""); // Clear error when user types
   };
   return (
     <div className="login-main-div">
       <form className="login-sec-2" ref={formRef} onSubmit={handleClick}>
-        <Grid containor>
-          <Grid
-            xs={12}
-            style={{ margin: 20 }}
-            item
-            className="login-sec-2-grid"
-          >
-            <div class="login-sec-2-label"> Login</div>
+        <Grid container>
+          <Grid xs={12} item className="login-sec-2-grid">
+            <div className="login-sec-2-label">Welcome Back</div>
           </Grid>
+          <Grid xs={12} item className="login-sec-2-grid" style={{ marginBottom: 20 }}>
+            <div className="login-subtitle">Sign in to your account</div>
+          </Grid>
+          
+          {error && (
+            <Grid xs={12} item className="login-sec-2-grid">
+              <div className="login-error-message">
+                {error}
+              </div>
+            </Grid>
+          )}
+          
           <Grid
             style={{ marginBlock: 30 }}
             className="login-sec-2-grid"
@@ -50,9 +67,10 @@ export default function Login() {
                 setUserData(e, "emailid");
               }}
               required={true}
-              variant="standard"
+              variant="outlined"
               label="Email Id"
               type="email"
+              autoComplete="username"
             />
           </Grid>
           <Grid
@@ -63,13 +81,14 @@ export default function Login() {
           >
             <TextField
               fullWidth
-              variant="standard"
+              variant="outlined"
               onChange={(e) => {
                 setUserData(e, "password");
               }}
               required={true}
               label="Password"
               type="password"
+              autoComplete="current-password"
             />
           </Grid>
           <Grid
@@ -78,7 +97,7 @@ export default function Login() {
             item
             xs={12}
           >
-            <Button fullWidth variant="outlined" color="primary" type="submit">
+            <Button fullWidth variant="contained" color="primary" type="submit">
               Login
             </Button>
           </Grid>
@@ -88,15 +107,15 @@ export default function Login() {
             xs={12}
             className="login-sec-2-grid"
           >
-            <div class="login-sec-2-txt">
-              If You Don't Have Account ?{" "}
+            <div className="login-sec-2-txt">
+              Don't have an account? {" "}
               <span
                 onClick={() => {
                   history("/signup", { replace: true });
                 }}
                 className="login-sec-2-warn"
               >
-                SignUp
+                Sign up
               </span>
             </div>
           </Grid>
