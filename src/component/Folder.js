@@ -1,6 +1,9 @@
 import React, { useContext, useRef } from "react";
 import { SERVER_URL } from "../api/server";
 import ContextMain from "../context/ContextMain";
+import PublicRoundedIcon from '@material-ui/icons/PublicRounded';
+import LockRoundedIcon from '@material-ui/icons/LockRounded';
+import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import "../css/folder.css";
 import { Navigate } from "react-router";
 
@@ -17,7 +20,7 @@ export default function Folder(props) {
     folder_add_date,
     space,
   } = props.folder;
-  const { isBlur } = props;
+  const { isBlur, isCopy } = props;
   const fileRef = useRef();
   const fileLogo = {
     csv: "excel.png",
@@ -54,11 +57,12 @@ export default function Folder(props) {
   };
   
   const isSelected = _id === context.getClickFolder._id;
+  const accessType = access_all ? 'public' : (access_people && access_people.length>0 ? 'shared' : 'private');
   
   return (
     <div
       tabIndex="0"
-      className={`folder-main ${isSelected ? "folder-main-selected" : ""} ${isBlur ? "folder-cut" : ""}`}
+      className={`folder-main ${isSelected ? "folder-main-selected" : ""} ${isBlur ? "folder-cut" : ""} ${isCopy ? "folder-copy" : ""}`}
       onFocus={() => {
         handleSave();
       }}
@@ -80,6 +84,28 @@ export default function Folder(props) {
         <div className="folder-cut-badge">
           <span className="folder-cut-icon">✂</span>
           <span className="folder-cut-text">Cut</span>
+        </div>
+      )}
+      {isCopy && (
+        <div className="folder-copy-badge">
+          <span className="folder-copy-icon">📋</span>
+          <span className="folder-copy-text">Copy</span>
+        </div>
+      )}
+      {/* access badge */}
+      <div className={`folder-access-badge folder-access-${accessType}`} title={accessType === 'public' ? 'Public' : accessType === 'shared' ? 'Shared' : 'Private'}>
+        {accessType === 'public' ? (
+          <PublicRoundedIcon style={{fontSize:14,color:'white'}} />
+        ) : accessType === 'shared' ? (
+          <PersonRoundedIcon style={{fontSize:14,color:'white'}} />
+        ) : (
+          <LockRoundedIcon style={{fontSize:14,color:'white'}} />
+        )}
+      </div>
+      {isCopy && (
+        <div className="folder-copy-badge">
+          <span className="folder-copy-icon">📋</span>
+          <span className="folder-copy-text">Copy</span>
         </div>
       )}
       <div className="folder-logo-wrapper">

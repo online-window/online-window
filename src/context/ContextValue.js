@@ -51,6 +51,7 @@ export default function ContextValue(props) {
   });
   const [getAnchor, setAnchor] = useState({ x: 0, y: 0 });
   const [getCutFolder, setCutFolder] = useState({ _id: "", folder_name: "" });
+  const [getCopyFolder, setCopyFolder] = useState({ _id: "", folder_name: "" });
   const [getMenuOption, setMenuOptions] = useState([]);
   const [open, setOpen] = useState(false);
   const [getForward, setForward] = useState([]);
@@ -232,7 +233,27 @@ export default function ContextValue(props) {
         Alert("Not Allow In Shared Folder");
         return;
       }
+      // ensure copy clipboard is cleared when user chooses Cut
+      setCopyFolder({ _id: "", folder_name: "" });
       setCutFolder({
+        _id: getClickFolder._id,
+        folder_name: getClickFolder.folder_name,
+      });
+      setRender(!getRender);
+    } catch (e) {
+      Alert("Server Error....");
+    }
+  };
+
+  const CopyFolder = () => {
+    try {
+      if (getShared) {
+        Alert("Not Allow In Shared Folder");
+        return;
+      }
+      // ensure cut clipboard is cleared when user chooses Copy
+      setCutFolder({ _id: "", folder_name: "" });
+      setCopyFolder({
         _id: getClickFolder._id,
         folder_name: getClickFolder.folder_name,
       });
@@ -349,7 +370,7 @@ export default function ContextValue(props) {
         return;
       }
       setOpen(true);
-      setDialog({ title: "Get Link", component: <AccessLink /> });
+      setDialog({ title: "Share", component: <AccessLink /> });
     } catch (e) {
       Alert("Server Error....");
     }
@@ -394,6 +415,38 @@ export default function ContextValue(props) {
     }
     setCutFolder({ _id: "", folder_name: "" });
   };
+
+  const pasteCopyFolder = async () => {
+    try {
+      if (getShared) {
+        Alert("Not Allow In Shared Folder");
+        return;
+      }
+      if (getCopyFolder._id !== "") {
+        let curr = getCurrentDir;
+        let _id = curr[curr.length - 1]._id;
+        let body = {};
+        if (_id) {
+          body["folder_parent"] = _id;
+        } else {
+          body["folder_parent"] = "null";
+        }
+        setLoading(true);
+        // Use server endpoint for copy. This will create a duplicate of the folder under target parent.
+        let res = await postRequest(`folder/copy/${getCopyFolder._id}`, body);
+        setLoading(false);
+        if (res.status) {
+          Alert(`Folder ${getCopyFolder.folder_name} Copied Successfully`, "success");
+          fetchFolders();
+        } else {
+          Alert(res.error, "warning");
+        }
+      }
+    } catch (e) {
+      Alert("Server Error...");
+    }
+    setCopyFolder({ _id: "", folder_name: "" });
+  };
   const SetMenuOptions = (status) => {
     if (status === 1) {
       let obj = [];
@@ -401,7 +454,8 @@ export default function ContextValue(props) {
         obj = [
           { name: "Rename", action: editFolder },
           { name: "Cut", action: MoveFolder },
-          { name: "Get Link", action: getAccessLink },
+          { name: "Copy", action: CopyFolder },
+          { name: "Share", action: getAccessLink },
           { name: "Edit Logo", action: EditFolderLogo },
         ];
       }
@@ -420,8 +474,12 @@ export default function ContextValue(props) {
           { name: "Upload File", action: uploadFile },
         ];
       }
-      if(getCutFolder._id){
-        obj.push({ name: "Paste", action: pasteFolder });
+      // show paste options depending on what is in clipboard (cut or copy)
+      if (getCutFolder._id) {
+        obj.push({ name: "Paste (Move)", action: pasteFolder });
+      }
+      if (getCopyFolder._id) {
+        obj.push({ name: "Paste (Copy)", action: pasteCopyFolder });
       }
       var options = [
         ...obj,
@@ -552,7 +610,9 @@ export default function ContextValue(props) {
         editProfile,
         uploadFile,
         uploadFolderLogo,
-        getCutFolder,
+  getCutFolder,
+  getCopyFolder,
+  setCopyFolder,
         uploadFileRef,
         open,
         setOpen,
@@ -586,6 +646,8 @@ export default function ContextValue(props) {
         MovePrev,
         reloadPage,
         newFolder,
+  CopyFolder,
+  pasteCopyFolder,
         editFolder,
         getForward,
         setForward,

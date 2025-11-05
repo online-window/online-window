@@ -16,7 +16,12 @@ export default function RightBar() {
         {
           context.getFolders.map((folder)=>{
             return(
-              <Folder isBlur={folder._id===context.getCutFolder._id} folder={folder} key={folder._id} />
+              <Folder 
+                isBlur={folder._id===context.getCutFolder._id} 
+                isCopy={folder._id===context.getCopyFolder._id} 
+                folder={folder} 
+                key={folder._id} 
+              />
             )
           })
         }
